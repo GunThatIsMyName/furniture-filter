@@ -1,9 +1,12 @@
-import { filter_Project_AC, filter_update_AC, Load_Product } from "../utils/action";
+import { error_singleData_AC, filter_Project_AC, filter_update_AC, loading_singleData_AC, Load_Product, store_singleData_AC } from "../utils/action";
 import { priceConverter } from "../utils/format";
 
 const initState = {
   productList: [],
   filteredProject: [],
+  loadingSingleData:false,
+  errorSingleData:false,
+  singleData:{},
   filter:{
       search:"",
       category:"all",
@@ -67,7 +70,19 @@ const reducer = (state, action) => {
         return{
             ...state,filteredProject:list
         }
-        default:
+    case loading_singleData_AC:
+        return{
+            ...state,loadingSingleData:true,errorSingleData:false
+        }
+    case store_singleData_AC:
+        return{
+            ...state,singleData:action.payload,loadingSingleData:false
+        }
+    case error_singleData_AC:
+        return{
+            ...state,errorSingleData:true,loadingSingleData:false
+        }
+    default:
       throw new Error();
   }
 };

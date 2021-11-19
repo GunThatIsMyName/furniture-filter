@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { reducer, initState } from "../reducer/productReducer";
 import {
+  error_singleData_AC,
   filter_Project_AC,
   filter_update_AC,
+  loading_singleData_AC,
   Load_Product,
+  store_singleData_AC,
 } from "../utils/action";
 import { useAppContext } from "./appContext";
 
@@ -24,6 +27,18 @@ const ProdcutProvider = ({ children }) => {
     }
     dispatch({ type: filter_update_AC, payload: { name, value } });
   };
+
+  const getSingleData=async(url)=>{
+    dispatch({type:loading_singleData_AC})
+    try{
+      const response = await fetch(url);
+      const data = await response.json();
+      dispatch({type:store_singleData_AC,payload:data})
+    }
+    catch{
+      dispatch({type:error_singleData_AC})
+    }
+  }
   useEffect(() => {
     dispatch({ type: Load_Product, payload: products_data });
     // eslint-disable-next-line
@@ -33,7 +48,7 @@ const ProdcutProvider = ({ children }) => {
     dispatch({ type: filter_Project_AC });
   }, [state.filter]);
   return (
-    <ProductContext.Provider value={{ ...state, handleFilter }}>
+    <ProductContext.Provider value={{ ...state, handleFilter,getSingleData }}>
       {children}
     </ProductContext.Provider>
   );
