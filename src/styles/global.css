@@ -1,0 +1,18 @@
+.main-img{
+    width:100px;
+}
+.link-item{
+    margin-right:1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-shadow: 5px 10px 15px rgba(0,0,0,0.2);
+}
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.close{
+    font-size: 2rem;
+}
